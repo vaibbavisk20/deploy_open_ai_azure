@@ -1,0 +1,53 @@
+name: 'Deploy a LAMP VM to Azure action'
+description: 'This action helps create an Azure VM and deploy LAMP stack on it'
+branding:
+  icon: 'play-circle'
+  color: 'blue'
+inputs:
+  client-id:
+    description: 'Client id to login to azure'
+    required: true
+  tenant-id:
+    description: 'Tenant id to login to azure'
+    required: true
+  subscription-id:
+    description: 'Subscription id to be used with your az login'
+    required: true
+  resource-group-name:
+    description: 'Resource group to deploy your resources to'
+    required: true
+  admin-username:
+    description: 'Admin username to login to vm'
+    required: true
+  admin-password:
+    description: 'Admin password to login to vm'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Checkout master'
+      uses: actions/checkout@v3
+      
+    - name: az cli login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ inputs.client-id }}
+        tenant-id: ${{ inputs.tenant-id }}
+        subscription-id: ${{ inputs.subscription-id }}
+        enable-AzPSSession: false        
+
+    - name: Fetch Bicep Parameters File
+      run: |
+        json_content=$(curl -sL https://raw.githubusercontent.com/Azure-Samples/azure-search-openai-demo/main/infra/main.parameters.json)
+        echo "$json_content" > bicep_parameters.json >/dev/null 2>&1
+
+          --parameters "$(cat bicep_parameters.json)"
+    
+    - name: Deploy Bicep template
+      run: |
+        az deployment group create \
+          --resource-group ${{ secrets.AZURE_RG }} \
+          --template-uri https://raw.githubusercontent.com/Azure-Samples/azure-search-openai-demo/main/infra/main.bicep
+          --parameters "$(cat bicep_parameters.json)"
+          --parameters environmentName="testingenv" location="eastus"

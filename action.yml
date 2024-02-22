@@ -63,4 +63,4 @@ runs:
           --location EastUS
           --template-file external-repo/infra/main.bicep \
           --parameters external-repo/infra/main.parameters.json \
-          --parameters environmentName="testingenv" location="eastus"
+          --parameters environmentName="testingenv"

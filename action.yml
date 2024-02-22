@@ -65,21 +65,20 @@ runs:
           --environment testing-openai `
           --location eastus `
           --cwd external-repo
+      shell: pwsh
+
 
     - name: Set environment variables
       run: |
         azd env set AZURE_ENV_NAME testing-openai --cwd external-repo
         azd env set AZURE_LOCATION eastus --cwd external-repo
         azd env set AZURE_SUBSCRIPTION_ID ${{ inputs.subscription-id }} --cwd external-repo
+      shell: pwsh
+
 
     - name: Init Open AI Search Demo repo
       run: |
         azd up `
           --cwd external-repo `
           --environment testing-openai
-        # azd init -t azure-search-openai-demo `
-        #   --environment testing-openai `
-        #   --location eastus `
-        #   --subscription ${{ inputs.subscription-id }} `
-        #   --no-prompt
       shell: pwsh

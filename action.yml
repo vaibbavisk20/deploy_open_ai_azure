@@ -48,7 +48,7 @@ runs:
         az deployment sub create \
         --template-file ./external-repo/infra/main.bicep \
         --parameters ./external-repo/infra/main.parameters.json \
-        --parameters environmentName="testingenv" location="eastus" \
+        --parameters environmentName="testingenv" location="eastus" openAiResourceGroupLocation="eastus"\
         --location EastUS
       # env:
       #   AZURE_ENV_NAME="try4"

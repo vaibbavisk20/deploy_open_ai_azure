@@ -60,7 +60,7 @@ runs:
       run: |
         az deployment sub create \
           # --resource-group ${{ inputs.resource-group-name }} \
-          --location EastUS
+          --location EastUS \
           --template-file external-repo/infra/main.bicep \
           --parameters external-repo/infra/main.parameters.json \
           --parameters environmentName="testingenv"

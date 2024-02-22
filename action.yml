@@ -38,11 +38,10 @@ runs:
         enable-AzPSSession: false        
 
     - name: Fetch Bicep Parameters File
+      shell: bash
       run: |
         json_content=$(curl -sL https://raw.githubusercontent.com/Azure-Samples/azure-search-openai-demo/main/infra/main.parameters.json)
         echo "$json_content" > bicep_parameters.json >/dev/null 2>&1
-
-          --parameters "$(cat bicep_parameters.json)"
     
     - name: Deploy Bicep template
       run: |

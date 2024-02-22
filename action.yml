@@ -61,7 +61,9 @@ runs:
 
     - name: Init Open AI Search Demo repo
       run: |
-        azd up --cwd external-repo
+        azd up `
+          --cwd external-repo `
+          --environment testing-openai
         # azd init -t azure-search-openai-demo `
         #   --environment testing-openai `
         #   -- location eastus `

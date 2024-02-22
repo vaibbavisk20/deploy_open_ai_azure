@@ -83,6 +83,6 @@ runs:
     - name: Init Open AI Search Demo repo
       run: |
         azd up `
-          --cwd external-repo `
+          # --cwd external-repo `
           --environment testing-openai
       shell: pwsh

@@ -45,9 +45,9 @@ runs:
     - name: Deploy Bicep template
       shell: bash
       run: |
-      az deployment group create \
-      --template-file ./external-repo/infra/main.bicep \
-      --parameters ./external-repo/infra/main.parameters.json \
-      --parameters environmentName="testingenv" \
-      --location EastUS
+        az deployment group create \
+        --template-file ./external-repo/infra/main.bicep \
+        --parameters ./external-repo/infra/main.parameters.json \
+        --parameters environmentName="testingenv" \
+        --location EastUS
     

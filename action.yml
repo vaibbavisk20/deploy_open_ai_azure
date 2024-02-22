@@ -48,6 +48,6 @@ runs:
       run: |
         az deployment group create \
           --resource-group ${{ inputs.resource-group-name }} \
-          --template-uri https://raw.githubusercontent.com/Azure-Samples/azure-search-openai-demo/main/infra/main.bicep
-          --parameters "$(cat bicep_parameters.json)"
+          --template-uri https://raw.githubusercontent.com/Azure-Samples/azure-search-openai-demo/main/infra/main.bicep \
+          --parameters "$(cat bicep_parameters.json)" \
           --parameters environmentName="testingenv" location="eastus"

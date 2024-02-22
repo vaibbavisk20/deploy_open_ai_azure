@@ -57,7 +57,9 @@ runs:
           --client-id ${{ inputs.client-id }} `
           --federated-credential-provider "github" `
           --tenant-id ${{ inputs.tenant-id }}
-      shell: pwsh
+      shell: bash
+
+      
     
       
     

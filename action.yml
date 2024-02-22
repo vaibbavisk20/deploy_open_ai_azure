@@ -44,6 +44,7 @@ runs:
         echo "$json_content" > bicep_parameters.json >/dev/null 2>&1
     
     - name: Deploy Bicep template
+      shell: bash
       run: |
         az deployment group create \
           --resource-group ${{ inputs.resource-group-name }} \

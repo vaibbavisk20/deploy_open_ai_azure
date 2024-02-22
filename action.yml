@@ -5,10 +5,10 @@ branding:
   color: 'blue'
 inputs:
   client-id:
-    description: 'Client id to login to azure'
+    description: 'Client id to log in to azure'
     required: true
   tenant-id:
-    description: 'Tenant id to login to azure'
+    description: 'Tenant id to log in to azure'
     required: true
   subscription-id:
     description: 'Subscription id to be used with your az login'
@@ -17,10 +17,10 @@ inputs:
     description: 'Resource group to deploy your resources to'
     required: true
   admin-username:
-    description: 'Admin username to login to vm'
+    description: 'Admin username to log in to vm'
     required: true
   admin-password:
-    description: 'Admin password to login to vm'
+    description: 'Admin password to log in to vm'
     required: true
 
 runs:
@@ -28,7 +28,7 @@ runs:
   steps:
     - name: 'Checkout master'
       uses: actions/checkout@v3
-      
+
     - name: az cli login
       uses: azure/login@v1
       with:
@@ -36,7 +36,7 @@ runs:
         tenant-id: ${{ inputs.tenant-id }}
         subscription-id: ${{ inputs.subscription-id }}
         enable-AzPSSession: false
-        
+
     - name: Checkout Azure-Samples/azure-search-openai-demo repository
       uses: actions/checkout@v2
       with:
@@ -58,20 +58,20 @@ runs:
           --federated-credential-provider "github" `
           --tenant-id ${{ inputs.tenant-id }}
       shell: pwsh
-      
+
     - name: Create environment
-        run: |
-          azd env new testing-openai `
-            --environment testing-openai `
-            -- location eastus `
-            --cwd external-repo
+      run: |
+        azd env new testing-openai `
+          --environment testing-openai `
+          --location eastus `
+          --cwd external-repo
 
     - name: Set environment variables
       run: |
         azd env set AZURE_ENV_NAME testing-openai --cwd external-repo
         azd env set AZURE_LOCATION eastus --cwd external-repo
         azd env set AZURE_SUBSCRIPTION_ID ${{ inputs.subscription-id }} --cwd external-repo
-        
+
     - name: Init Open AI Search Demo repo
       run: |
         azd up `
@@ -79,12 +79,7 @@ runs:
           --environment testing-openai
         # azd init -t azure-search-openai-demo `
         #   --environment testing-openai `
-        #   -- location eastus `
-        #   -- subscription ${{ inputs.subscription-id }} `
+        #   --location eastus `
+        #   --subscription ${{ inputs.subscription-id }} `
         #   --no-prompt
       shell: pwsh
-
-      
-    
-      
-    

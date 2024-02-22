@@ -62,7 +62,6 @@ runs:
     - name: Create environment
       run: |
         azd env new testing-openai `
-          --environment testing-openai `
           --location eastus `
           --cwd external-repo
       shell: pwsh
@@ -70,9 +69,9 @@ runs:
 
     - name: Set environment variables
       run: |
-        azd env set AZURE_ENV_NAME testing-openai --cwd external-repo
-        azd env set AZURE_LOCATION eastus --cwd external-repo
-        azd env set AZURE_SUBSCRIPTION_ID ${{ inputs.subscription-id }} --cwd external-repo
+        azd env set AZURE_ENV_NAME testing-openai --cwd external-repo --environment testing-openai
+        azd env set AZURE_LOCATION eastus --cwd external-repo --environment testing-openai
+        azd env set AZURE_SUBSCRIPTION_ID ${{ inputs.subscription-id }} --cwd external-repo --environment testing-openai
       shell: pwsh
 
 

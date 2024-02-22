@@ -35,7 +35,20 @@ runs:
         client-id: ${{ inputs.client-id }}
         tenant-id: ${{ inputs.tenant-id }}
         subscription-id: ${{ inputs.subscription-id }}
-        enable-AzPSSession: false        
+        enable-AzPSSession: false
+    - name: Checkout Azure-Samples/azure-search-openai-demo repository
+      uses: actions/checkout@v2
+      with:
+        repository: Azure-Samples/azure-search-openai-demo
+        path: external-repo
+    
+    - name: Deploy Bicep template
+      shell: bash
+      run: |
+      az deployment group create \
+      --template-file ./external-repo/infra/main.bicep \
+      --parameters ./external-repo/infra/main.parameters.json \
+      --parameter
 
     # - name: Fetch Bicep Parameters File
     #   shell: bash
@@ -49,18 +62,6 @@ runs:
     #     json_content=$(curl -sL https://raw.githubusercontent.com/Azure-Samples/azure-search-openai-demo/main/infra/main.bicep)
     #     echo "$json_content" > bicep_template.json >/dev/null 2>&1
 
-    - name: Checkout Azure-Samples/azure-search-openai-demo repository
-      uses: actions/checkout@v2
-      with:
-        repository: Azure-Samples/azure-search-openai-demo
-        path: external-repo
-    
-    - name: Deploy Bicep template
-      shell: bash
-      run: |
-      az deployment group create \
-      --template-file ./external-repo/infra/main.bicep \
-      --parameters ./external-repo/infra/main.parameters.json \
-      --parameters environmentName="testingenv" \
+    s environmentName="testingenv" \
       --location EastUS
 

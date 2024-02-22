@@ -74,6 +74,10 @@ runs:
         azd env set AZURE_SUBSCRIPTION_ID ${{ inputs.subscription-id }} --cwd external-repo --environment testing-openai
       shell: pwsh
 
+    - name: List directories
+      run: |
+        dir
+      shell: pwsh
 
     - name: Init Open AI Search Demo repo
       run: |

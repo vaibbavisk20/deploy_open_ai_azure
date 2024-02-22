@@ -58,7 +58,19 @@ runs:
           --federated-credential-provider "github" `
           --tenant-id ${{ inputs.tenant-id }}
       shell: pwsh
+      
+    - name: Create environment
+        run: |
+          azd env new testing-openai `
+            --environment testing-openai `
+            -- location eastus `
 
+    - name: Set environment variables
+      run: |
+        azd env set AZURE_ENV_NAME testing-openai
+        azd env set AZURE_LOCATION eastus
+        azd env set AZURE_SUBSCRIPTION_ID ${{ inputs.subscription-id }}
+        
     - name: Init Open AI Search Demo repo
       run: |
         azd up `

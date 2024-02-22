@@ -59,7 +59,8 @@ runs:
       shell: bash
       run: |
       az deployment group create \
-      --location EastUS \
       --template-file ./external-repo/infra/main.bicep \
       --parameters ./external-repo/infra/main.parameters.json \
-      --parameters environmentName="testingenv"
+      --parameters environmentName="testingenv" \
+      --location EastUS
+

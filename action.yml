@@ -50,4 +50,8 @@ runs:
         --parameters ./external-repo/infra/main.parameters.json \
         --parameters environmentName="testingenv" \
         --location EastUS
+      env:
+        AZURE_ENV_NAME="try4"
+        AZURE_LOCATION="westus2"
+        AZURE_SUBSCRIPTION_ID=${{ inputs.subscription-id }}
     

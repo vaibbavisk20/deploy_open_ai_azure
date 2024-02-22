@@ -64,7 +64,8 @@ runs:
         azd init -t azure-search-openai-demo `
           --environment testing-openai `
           -- location eastus `
-          -- subscription ${{ inputs.subscription-id }}
+          -- subscription ${{ inputs.subscription-id }} `
+          --no-prompt
       shell: pwsh
 
       

@@ -44,7 +44,7 @@ runs:
         path: external-repo
 
     - name: Install azd
-        uses: Azure/setup-azd@v0.1.0
+      uses: Azure/setup-azd@v0.1.0
 
     - name: Install Nodejs
       uses: actions/setup-node@v4

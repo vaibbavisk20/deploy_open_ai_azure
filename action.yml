@@ -48,20 +48,6 @@ runs:
       az deployment group create \
       --template-file ./external-repo/infra/main.bicep \
       --parameters ./external-repo/infra/main.parameters.json \
-      --parameter
-
-    # - name: Fetch Bicep Parameters File
-    #   shell: bash
-    #   run: |
-    #     json_content=$(curl -sL https://raw.githubusercontent.com/Azure-Samples/azure-search-openai-demo/main/infra/main.parameters.json)
-    #     echo "$json_content" > bicep_parameters.json >/dev/null 2>&1
-
-    # - name: Fetch Bicep Template File
-    #   shell: bash
-    #   run: |
-    #     json_content=$(curl -sL https://raw.githubusercontent.com/Azure-Samples/azure-search-openai-demo/main/infra/main.bicep)
-    #     echo "$json_content" > bicep_template.json >/dev/null 2>&1
-
-    s environmentName="testingenv" \
+      --parameters environmentName="testingenv" \
       --location EastUS
-
+    

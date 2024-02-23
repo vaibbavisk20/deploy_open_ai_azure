@@ -82,7 +82,7 @@ runs:
       
     - name: Init Open AI Search Demo repo
       run: |
-        azd init -t azure-search-openai-demo --environment testing-openai
+        azd init -t azure-search-openai-demo --environment testing-openai --force
       shell: pwsh
 
     - name: Deploy Open AI Search Demo app

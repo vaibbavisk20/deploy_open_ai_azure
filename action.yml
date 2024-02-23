@@ -79,8 +79,11 @@ runs:
         dir
         chdir external-repo
       shell: pwsh
-
     - name: Init Open AI Search Demo repo
+      run: |
+        azd init -t azure-search-openai-demo --environment testing-openai
+    - name: Deploy Open AI Search Demo app
+    
       run: |
         azd up --environment testing-openai
       shell: pwsh

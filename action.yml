@@ -22,10 +22,7 @@ inputs:
   admin-password:
     description: 'Admin password to log in to vm'
     required: true
-  azure-credentials:
-    description: 'JSON of Azure Credentials'
-    required: true
-
+    
 runs:
   using: 'composite'
   steps:

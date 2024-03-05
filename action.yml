@@ -22,6 +22,9 @@ inputs:
   admin-password:
     description: 'Admin password to log in to vm'
     required: true
+  azure-credentials:
+    description: 'JSON of Azure Credentials'
+    required: true
 
 runs:
   using: 'composite'
@@ -29,7 +32,7 @@ runs:
     AZURE_CLIENT_ID: ${{ inputs.client-id }}
     AZURE_TENANT_ID: ${{ inputs.tenant-id }}
     AZURE_SUBSCRIPTION_ID: ${{ inputs.subscription-id }}
-    AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+    AZURE_CREDENTIALS: ${{ inputs.azure-credentials }}
   steps:
     - name: 'Checkout master'
       uses: actions/checkout@v3

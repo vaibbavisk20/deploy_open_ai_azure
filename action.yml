@@ -23,69 +23,58 @@ inputs:
     description: 'Admin password to log in to vm'
     required: true
 
-runs:
-  using: 'composite'
-  steps:
-    - name: 'Checkout master'
-      uses: actions/checkout@v3
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      AZURE_CLIENT_ID: ${{ inputs.client-id }}
+      AZURE_TENANT_ID: ${{ inputs.tenant-id }}
+      AZURE_SUBSCRIPTION_ID: ${{ inputs.subscription-id }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+    steps:
+      - name: 'Checkout master'
+        uses: actions/checkout@v3
 
-    - name: az cli login
-      uses: azure/login@v1
-      with:
-        client-id: ${{ inputs.client-id }}
-        tenant-id: ${{ inputs.tenant-id }}
-        subscription-id: ${{ inputs.subscription-id }}
-        enable-AzPSSession: false
+      - name: az cli login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ inputs.client-id }}
+          tenant-id: ${{ inputs.tenant-id }}
+          subscription-id: ${{ inputs.subscription-id }}
+          enable-AzPSSession: false
 
-    - name: Checkout Azure-Samples/azure-search-openai-demo repository
-      uses: actions/checkout@v2
-      with:
-        repository: Azure-Samples/azure-search-openai-demo
-        path: external-repo
+      - name: Checkout Azure-Samples/azure-search-openai-demo repository
+        uses: actions/checkout@v2
+        with:
+          repository: Azure-Samples/azure-search-openai-demo
+          path: external-repo
+  
+      - name: Install azd
+        uses: Azure/setup-azd@v0.1.0
 
-    - name: Install azd
-      uses: Azure/setup-azd@v0.1.0
+      - name: Install Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-    - name: Install Nodejs
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
+      - name: List directories
+        run: |
+          dir
+          chdir external-repo
+        shell: pwsh
 
-    - name: Log in with Azure (Federated Credentials)
-      run: |
-        azd auth login `
-          --client-id ${{ inputs.client-id }} `
-          --federated-credential-provider "github" `
-          --tenant-id ${{ inputs.tenant-id }}
-      shell: pwsh
+      - name: Provision Infrastructure
+        run: azd provision --no-prompt
+        env:
+          AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        shell: pwsh
 
-    - name: Create environment
-      run: |
-        azd env new testing-openai `
-          --location eastus `
-          --cwd external-repo
-      shell: pwsh
-
-
-    - name: Set environment variables
-      run: |
-        azd env set AZURE_ENV_NAME testing-openai --cwd external-repo --environment testing-openai
-        azd env set AZURE_LOCATION eastus --cwd external-repo --environment testing-openai
-        azd env set AZURE_SUBSCRIPTION_ID ${{ inputs.subscription-id }} --cwd external-repo --environment testing-openai
-      shell: pwsh
-
-    - name: List directories
-      run: |
-        dir
-        chdir external-repo
-      shell: pwsh
-      
-    - name: Init Open AI Search Demo repo
-      run: |
-        azd init -t azure-search-openai-demo --environment testing-openai --no-prompt
-      shell: pwsh
-
-    - name: Deploy Open AI Search Demo app
-      run: |
-        azd up --environment testing-openai
-      shell: pwsh
+      - name: Deploy Application
+        run: azd deploy --no-prompt
+        env:
+          AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        shell: pwsh

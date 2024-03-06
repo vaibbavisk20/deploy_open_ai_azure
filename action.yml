@@ -65,6 +65,15 @@ runs:
       run: |
         dir
       shell: pwsh
+
+    - name: Log in with Azure (Federated Credentials)
+      run: |
+        azd auth login `
+          --client-id ${{ inputs.client-id }}
+          --federated-credential-provider "github" `
+          --tenant-id ${{ inputs.tenant-id }}
+      shell: pwsh
+
       
     - name: Initialize Application
       run: azd init -t Azure-Samples/azure-search-openai-demo --no-prompt

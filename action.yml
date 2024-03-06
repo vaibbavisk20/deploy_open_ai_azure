@@ -58,7 +58,7 @@ runs:
       shell: pwsh
     - name: fudge is i know
       run: |
-        azd pipeline config
+        azd init -t Azure-Samples/azure-search-openai-demo
       shell: pwsh
       
     # - name: Provision Infrastructure

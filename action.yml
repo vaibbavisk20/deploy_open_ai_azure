@@ -37,11 +37,11 @@ runs:
         subscription-id: ${{ inputs.subscription-id }}
         enable-AzPSSession: false
 
-    - name: Checkout Azure-Samples/azure-search-openai-demo repository
-      uses: actions/checkout@v2
-      with:
-        repository: Azure-Samples/azure-search-openai-demo
-        path: external-repo
+    # - name: Checkout Azure-Samples/azure-search-openai-demo repository
+    #   uses: actions/checkout@v2
+    #   with:
+    #     repository: Azure-Samples/azure-search-openai-demo
+    #     path: external-repo
   
     - name: Install azd
       uses: Azure/setup-azd@v0.1.0

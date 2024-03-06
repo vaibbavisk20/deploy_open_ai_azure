@@ -53,13 +53,13 @@ runs:
 
     - name: List directories
       run: |
-        dir
         mkdir azd-repo
         chdir azd-repo
+        dir
       shell: pwsh
       
     - name: Provision Infrastructure
-      run: azd init -t Azure-Samples/azure-search-openai-demo
+      run: azd init -t Azure-Samples/azure-search-openai-demo --no-prompt
       env:
         AZURE_ENV_NAME: ${{ inputs.resource-group-name }}
         AZURE_LOCATION: 'eastus'

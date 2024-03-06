@@ -51,10 +51,14 @@ runs:
       with:
         node-version: 20
 
-    - name: List directories
+    - name: Create directory
       run: |
         mkdir azd-repo
         chdir azd-repo
+      shell: pwsh
+
+    - name: List directories
+      run: |
         dir
       shell: pwsh
       

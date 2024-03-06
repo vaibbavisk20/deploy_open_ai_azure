@@ -58,7 +58,7 @@ runs:
 
     - name: Change directory
       run: |
-        chdir azd-repo
+        cd azd-repo
       shell: pwsh
       
     - name: List directories

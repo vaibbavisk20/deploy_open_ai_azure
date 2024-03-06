@@ -68,6 +68,7 @@ runs:
       
     - name: Provision Infrastructure
       run: azd init -t Azure-Samples/azure-search-openai-demo --no-prompt
+      working-directory: azd-repo
       env:
         AZURE_ENV_NAME: ${{ inputs.resource-group-name }}
         AZURE_LOCATION: 'eastus'

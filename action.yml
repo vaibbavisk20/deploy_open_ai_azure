@@ -69,7 +69,7 @@ runs:
     - name: Log in with Azure (Federated Credentials)
       run: |
         azd auth login `
-          --client-id ${{ inputs.client-id }}
+          --client-id ${{ inputs.client-id }} `
           --federated-credential-provider "github" `
           --tenant-id ${{ inputs.tenant-id }}
       shell: pwsh

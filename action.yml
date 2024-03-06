@@ -53,7 +53,7 @@ runs:
 
     - name: Create directory
       run: |
-        chdir azd-repo
+        mkdir azd-repo
       shell: pwsh
 
     - name: Change directory

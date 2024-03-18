@@ -1,5 +1,5 @@
-name: 'Deploy a LAMP VM to Azure action'
-description: 'This action helps create an Azure VM and deploy LAMP stack on it'
+name: 'Deploy a Open AI Model to Azure action'
+description: 'This action helps create an OpenAI search model'
 branding:
   icon: 'play-circle'
   color: 'blue'

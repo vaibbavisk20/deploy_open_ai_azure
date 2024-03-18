@@ -20,6 +20,8 @@ Please install the Azure OIDC app from the Github Marketplace to populate the be
 - **tenant-id** (required): Tenant ID used for Azure login.
 - **subscription-id** (required): Azure subscription ID used with the `az login`.
 - **resource-group-name** (required): Resource group where Azure resources will be deployed.
+- **location** (required): Location where Azure resources will be deployed.
+
 
 ## Usage
 
@@ -54,7 +56,8 @@ jobs:
             client-id: ${{ secrets.AZURE_CLIENT_ID }}
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            resource-group-name: ${{secrets.AZURE_RG}}
+            resource-group-name: ${{secrets.AZURE_RG}} 
+            location: 'eastus'
 ```
 ## Output
 

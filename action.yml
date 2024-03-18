@@ -16,11 +16,8 @@ inputs:
   resource-group-name:
     description: 'Resource group to deploy your resources to'
     required: true
-  admin-username:
-    description: 'Admin username to log in to vm'
-    required: true
-  admin-password:
-    description: 'Admin password to log in to vm'
+  location:
+    description: 'Location to deploy OpenAI resource to'
     required: true
     
 runs:
@@ -36,12 +33,6 @@ runs:
         tenant-id: ${{ inputs.tenant-id }}
         subscription-id: ${{ inputs.subscription-id }}
         enable-AzPSSession: false
-
-    # - name: Checkout Azure-Samples/azure-search-openai-demo repository
-    #   uses: actions/checkout@v2
-    #   with:
-    #     repository: Azure-Samples/azure-search-openai-demo
-    #     path: external-repo
   
     - name: Install azd
       uses: Azure/setup-azd@v0.1.0
@@ -80,7 +71,7 @@ runs:
       working-directory: azd-repo
       env:
         AZURE_ENV_NAME: ${{ inputs.resource-group-name }}
-        AZURE_LOCATION: 'eastus'
+        AZURE_LOCATION: ${{ inputs.location }}
         AZURE_SUBSCRIPTION_ID: ${{ inputs.subscription-id }}
         AZURE_RESOURCE_GROUP: ${{ inputs.resource-group-name }}
       shell: pwsh
@@ -90,7 +81,7 @@ runs:
       working-directory: azd-repo
       env:
         AZURE_ENV_NAME: ${{ inputs.resource-group-name }}
-        AZURE_LOCATION: 'eastus'
+        AZURE_LOCATION: ${{ inputs.location }}
         AZURE_SUBSCRIPTION_ID: ${{ inputs.subscription-id }}
         AZURE_RESOURCE_GROUP: ${{ inputs.resource-group-name }}
       shell: pwsh

@@ -1,4 +1,4 @@
-name: workflow to deploy lamp stack on azure
+name: Workflow to deploy OpenAI resource to Azure v1
 
 on:
   push:

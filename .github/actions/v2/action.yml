@@ -1,0 +1,77 @@
+name: 'Deploy an OpenAI Model to Azure action'
+description: 'This action helps create an OpenAI search model'
+branding:
+  icon: 'play-circle'
+  color: 'blue'
+inputs:
+  client-id:
+    description: 'Client id to log in to azure'
+    required: true
+  tenant-id:
+    description: 'Tenant id to log in to azure'
+    required: true
+  subscription-id:
+    description: 'Subscription id to be used with your az login'
+    required: true
+  resource-group-name:
+    description: 'Resource group to deploy your resources to'
+    required: true
+  location:
+    description: 'Location to deploy OpenAI resource to'
+    required: true
+  principal-id:
+    description: 'FIC Service Principal ID'
+    required: false
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'Checkout master'
+      uses: actions/checkout@v3
+
+    - name: 'az cli login'
+      uses: azure/login@v2.1.0
+      with:
+        client-id: ${{ inputs.client-id }}
+        tenant-id: ${{ inputs.tenant-id }}
+        subscription-id: ${{ inputs.subscription-id }}
+        enable-AzPSSession: true
+
+    - name: 'Install azd'
+      uses: Azure/setup-azd@v0.1.0
+
+    - name: 'Install Nodejs'
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: 'Create directory'
+      run: mkdir airepo
+      shell: pwsh
+
+    - name: 'Change directory'
+      run: cd airepo
+      shell: pwsh
+
+    - name: 'List directories'
+      run: dir
+      shell: pwsh
+
+    - name: 'Log in with Azure (Federated Credentials)'
+      run: |
+        azd auth login `
+          --client-id ${{ inputs.client-id }} `
+          --federated-credential-provider "github" `
+          --tenant-id ${{ inputs.tenant-id }}
+      shell: pwsh
+
+    
+    - name: Az powershell
+      uses: azure/powershell@v2
+      with:
+        inlineScript: |
+          cd AOAISearchDemo
+          Install-Module -Name Az -Force -RequiredVersion 11.5.0
+          $PSVersionTable
+          Get-Credential
+        azPSVersion: "latest"

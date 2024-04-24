@@ -44,19 +44,7 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: 20
-
-    - name: 'Create directory'
-      run: mkdir airepo
-      shell: pwsh
-
-    - name: 'Change directory'
-      run: cd airepo
-      shell: pwsh
-
-    - name: 'List directories'
-      run: dir
-      shell: pwsh
-
+        
     - name: 'Log in with Azure (Federated Credentials)'
       run: |
         azd auth login `
@@ -70,8 +58,6 @@ runs:
       uses: azure/powershell@v2
       with:
         inlineScript: |
-          cd AOAISearchDemo
-          Install-Module -Name Az -Force -RequiredVersion 11.5.0
           $PSVersionTable
           Get-Credential
         azPSVersion: "latest"
